@@ -1,26 +1,29 @@
-import React from 'react';
+import { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
 import { COLORS, SIZES } from '../constants/index';
 import { Feather, Ionicons } from '@expo/vector-icons'
-const SearchInput = () => {
+const SearchInput = ({handleSearch}) => {
+   const [searchKey, setSearchKey] = useState('')
+
+   
    return (
       <View style={styles.searchContainer}>
          <TouchableOpacity>
-            <Feather name='search' size={24} style={styles.searchIcon} />
+            <Ionicons name='camera-outline' size={24} style={styles.searchIcon} />
          </TouchableOpacity>
 
          <View style={styles.searchWrapper}>
             <TextInput
                style={styles.searchInput}
-               value=''
-               onPressIn={() => { }}
+               value={searchKey}
+               onChangeText={setSearchKey}
                placeholder='What are locking for??'
             />
          </View>
 
          <View >
-            <TouchableOpacity style={styles.searchBtn}>
-               <Ionicons name='camera-outline' size={24} color={COLORS.lightWhite} />
+            <TouchableOpacity style={styles.searchBtn} onPress={() => handleSearch(searchKey)}>
+               <Feather name='search' size={24} color={COLORS.lightWhite} />
             </TouchableOpacity>
          </View>
       </View>

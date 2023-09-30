@@ -1,4 +1,6 @@
 
+
+
 import { useFonts } from 'expo-font';
 import { useCallback } from 'react';
 import * as SplashScreen from 'expo-splash-screen'
@@ -6,7 +8,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import BottomTabNavigation from './navigation/BottomTabNavigation';
-import { Cart } from './screens';
+import { Cart, ProductDetails, NewRivals } from './screens/index';
+
+import { ContextProvider } from './store/index';
+
 
 const Stack = createNativeStackNavigator()
 // SplashScreen.preventAutoHideAsync()
@@ -31,22 +36,39 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='Bottom navigation'
-          component={BottomTabNavigation}
-          options={{
-            headerShown: false
-          }} />
+    <ContextProvider>
+
+      <NavigationContainer>
+        <Stack.Navigator>
           <Stack.Screen
-          name='Cart'
-          component={Cart}
-          options={{
-            headerShown: false
-          }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+            name='Bottom navigation'
+            component={BottomTabNavigation}
+            options={{
+              headerShown: false
+            }} />
+          <Stack.Screen
+            name='Cart'
+            component={Cart}
+            options={{
+              headerShown: false
+            }} />
+          <Stack.Screen
+            name='ProductDetails'
+            component={ProductDetails}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            name='ProductList'
+            component={NewRivals}
+            options={{
+              headerShown: false
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ContextProvider>
   );
 }
 

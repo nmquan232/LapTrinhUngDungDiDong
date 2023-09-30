@@ -10,22 +10,22 @@ import {Home, Search, Profile} from '../screens/index'
 
 const Tab = createBottomTabNavigator()
 
-const screenOptions = {
-    tabBarShowLabel: false,
-    tabBarHideOnKeyboard: true,
-    headerShown: false,
-    tabBarStyle: {
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        left: 0,
-        elevation: 0,
-        height: 70
-    }
-}
+
 const BottomTabNavigation = () => {
     return (
-        <Tab.Navigator screenOptions={screenOptions}>
+        <Tab.Navigator screenOptions={{
+            tabBarShowLabel: false,
+            tabBarHideOnKeyboard: true,
+            headerShown: false,
+            tabBarStyle: {
+                // position: 'absolute',
+                // bottom: -50,
+                // right: 0,
+                // left: 0,
+                // elevation: 0,
+                // height: 70
+            }
+        }}>
             <Tab.Screen 
             name='Home' 
             component={Home}
@@ -60,7 +60,7 @@ const BottomTabNavigation = () => {
             options={{
                 tabBarIcon: ({focused, size, color}) => {
                     return (
-                        <Ionicons name={focused ? 'person' : 'home-outline'}
+                        <Ionicons name={focused ? 'person' : 'person-outline'}
                         size={24}
                         color={focused ? COLORS.primary : COLORS.gray2}
                         />
