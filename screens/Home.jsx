@@ -1,23 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
 import { Welcome, Carousel, Heading, ProductRow } from '../components/index';
 import {COLORS, SIZES} from '../constants/index'
-const Home = () => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const Home = ({navigation}) => {
+    const [userData, setUserData] = useState(null)
+    const [userLogin, setUserLogin] = useState(false)
+
+    useEffect( ()=> {
+        checkExistingUser()
+    }, [])
+
+    const checkExistingUser = async ()=> {
+        const id = await AsyncStorage.getItem('id')
+        const userId = `user${JSON.parse(id)}`
+
+        try {
+            const currentUser = await AsyncStorage.getItem(userId)
+
+            if (currentUser !== null) {
+                const parseData = JSON.parse(currentUser)
+                setUserData(parseData)
+                setUserLogin(true)
+            } else{
+                navigation.navigate('Login')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <SafeAreaView>
             <View style={styles.appBarWrapper}>
                 <View style={styles.appBar}>
                     <Ionicons name='location-outline' size={24} />
 
-                    <Text style={styles.location}>Ha Noi</Text>
+                    <Text style={styles.location}>{userData.location}</Text>
 
                     <View style={{ alignItems: 'flex-end' }}>
                         <View style={styles.cartCount}>
                             <Text style={styles.cartNumber} >8</Text>
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=> navigation.navigate('Cart')}>
                             <FontAwesome name='shopping-bag' size={24} />
                         </TouchableOpacity>
                     </View>

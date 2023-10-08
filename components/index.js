@@ -6,6 +6,8 @@ import ProductRow from "./products/ProductRow";
 import ProductCartView from "./products/ProductCartView";
 import ProductList from "./products/ProductList"
 import SearchTile from "./products/SearchTile";
+import BackBTN from "./BackBTN";
+import Button from "./Button";
 export{
    Welcome,
    SearchInput,
@@ -14,5 +16,7 @@ export{
    ProductRow,
    ProductCartView,
    ProductList,
-   SearchTile
+   SearchTile,
+   BackBTN,
+   Button
 }

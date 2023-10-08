@@ -28,7 +28,7 @@ const ProductDetails = ({ route, navigation }) => {
             <View style={styles.container}>
                 <View style={styles.upperRow}>
                     <TouchableOpacity onPress={() => { navigation.goBack() }} >
-                        <Ionicons name='chevron-back-circle' size={30} />
+                        <Ionicons name='chevron-back-circle' size={30} color={COLORS.primary} />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => { }} >
@@ -109,7 +109,7 @@ const ProductDetails = ({ route, navigation }) => {
                         <TouchableOpacity onPress={() => {}} style={styles.buyBtn}>
                             <Text style={styles.buyBtnText}>BUY</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.addToCart}>
+                        <TouchableOpacity style={styles.addToCart} onPress={()=> {}}>
                             <FontAwesome name='shopping-bag' size={24} color={COLORS.lightWhite}/>
                         </TouchableOpacity>
                     </View>

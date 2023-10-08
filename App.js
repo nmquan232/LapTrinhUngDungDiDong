@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import BottomTabNavigation from './navigation/BottomTabNavigation';
-import { Cart, ProductDetails, NewRivals } from './screens/index';
+import { Cart, ProductDetails, NewRivals, LoginPage, Orders, Favourites, Register } from './screens/index';
 
 import { ContextProvider } from './store/index';
 
@@ -39,32 +39,42 @@ export default function App() {
     <ContextProvider>
 
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+        >
           <Stack.Screen
             name='Bottom navigation'
             component={BottomTabNavigation}
-            options={{
-              headerShown: false
-            }} />
+          />
           <Stack.Screen
             name='Cart'
             component={Cart}
-            options={{
-              headerShown: false
-            }} />
+          />
           <Stack.Screen
             name='ProductDetails'
             component={ProductDetails}
-            options={{
-              headerShown: false
-            }}
           />
           <Stack.Screen
             name='ProductList'
             component={NewRivals}
-            options={{
-              headerShown: false
-            }}
+          />
+          <Stack.Screen
+            name='Login'
+            component={LoginPage}
+          />
+          <Stack.Screen
+            name='Register'
+            component={Register}
+          />
+          <Stack.Screen
+            name='Orders'
+            component={Orders}
+          />
+          <Stack.Screen
+            name='Favourites'
+            component={Favourites}
           />
         </Stack.Navigator>
       </NavigationContainer>
