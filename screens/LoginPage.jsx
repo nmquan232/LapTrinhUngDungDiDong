@@ -40,8 +40,7 @@ const LoginPage = ({ navigation }) => {
                 setResData(response.data)
                 setLoader(false)
                 await AsyncStorage.setItem(`user${resData._id}`, JSON.stringify(resData))
-                const id = JSON.stringify(resData._id)
-                await AsyncStorage.setItem('id', id)
+                await AsyncStorage.setItem('id', resData._id)
                 navigation.replace('Bottom navigation')
             } else {
                 Alert.alert(

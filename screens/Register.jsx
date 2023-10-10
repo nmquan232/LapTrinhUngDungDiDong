@@ -5,7 +5,7 @@ import { BackBTN, Button } from '../components';
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { MaterialCommunityIcons, FontAwesome, Ionicons  } from '@expo/vector-icons'
-
+import axios from 'axios';
 
 const validationSchema = Yup.object().shape({
 
@@ -29,7 +29,7 @@ const validationSchema = Yup.object().shape({
     
 })
 const Register = ({navigation}) => {
-    const [resData, setResData] = useState(null)
+    const [loader, setLoader] = useState(false)
     const [obsecureText, setObsecureText] = useState(true)
     const [obsecurePasswordCf, setObsecurePasswordCf] = useState(true)
 
@@ -42,6 +42,41 @@ const Register = ({navigation}) => {
                 { defaultIndex: 1 }
             ]
         )
+    }
+
+
+    const handleSignUp = async (value) => {
+        setLoader(true)
+        
+        try {
+            const response = await axios.post('https://furniture-app-ottf.onrender.com/auth/register', value)
+            if (response.status === 201) {
+                setLoader(false)
+                Alert.alert(
+                    "Success",
+                    "Login your account",
+                    [
+                        {
+                            text: "Continue", onPress: () => {navigation.navigate('Login') }
+                        },
+                        { defaultIndex: 1 }
+                    ]
+                )
+            }else {
+                Alert.alert(
+                    "Fail",
+                    "Account already exists",
+                    [
+        
+                        { defaultIndex: 1 }
+                    ]
+                )
+            }
+        } catch (error) {
+            console.log(error);
+        }finally {
+            setLoader(false)
+        }
     }
     return (
         <ScrollView>
@@ -58,7 +93,7 @@ const Register = ({navigation}) => {
                     <Formik
                         initialValues={{ email: '', password: '', fullname: '', username: '', location: '', passwordConfirmation: '' }}
                         validationSchema={validationSchema}
-                        onSubmit={value => console.log(value)}
+                        onSubmit={value => handleSignUp(value)}
                     >
                         {({ handleChange, handleBlur, touched, handleSubmit, values, errors, isValid, setFieldTouched }) => (
                             <View>
@@ -238,7 +273,7 @@ const Register = ({navigation}) => {
                                 </View>
                                 {/* -----CF PASSWORD------- */}
 
-                                <Button title={'Sign Up'} onPress={isValid ? handleSubmit : inValidForm} isValid={isValid} />
+                                <Button title={'Sign Up'} onPress={isValid ? handleSubmit : inValidForm} isValid={isValid} loader={loader} />
                                 <Text style={styles.registerTxt} onPress={() => navigation.navigate('Login')}>Sign In</Text>
                             </View>
                         )}

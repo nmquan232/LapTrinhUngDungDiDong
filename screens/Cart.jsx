@@ -1,17 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Text , SafeAreaView} from 'react-native';
-import { BackArrow } from '../components';
-const Cart = () => {
+import { BackBTN } from '../components';
+const Cart = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
-            <BackArrow />
+            <BackBTN onPress={()=> navigation.goBack()} />
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        marginHorizontal: 20
     },
     
 })

@@ -9,13 +9,13 @@ const Profile = ({ navigation }) => {
     const [userData, setUserData] = useState(null)
     const [userLogin, setUserLogin] = useState(false)
 
-    useEffect( ()=> {
+    useEffect(() => {
         checkExistingUser()
     }, [])
 
-    const checkExistingUser = async ()=> {
+    const checkExistingUser = async () => {
         const id = await AsyncStorage.getItem('id')
-        const userId = `user${JSON.parse(id)}`
+        const userId = `user${id}`
 
         try {
             const currentUser = await AsyncStorage.getItem(userId)
@@ -24,27 +24,37 @@ const Profile = ({ navigation }) => {
                 const parseData = JSON.parse(currentUser)
                 setUserData(parseData)
                 setUserLogin(true)
-            } else{
-                navigation.navigate('Login')
             }
         } catch (error) {
             console.log(error);
         }
     }
+
+
+    const userLogout = async () => {
+        const id = await AsyncStorage.getItem('id')
+        const userId = `user${id}`
+        try {
+            await AsyncStorage.multiRemove([userId, 'id'])
+            navigation.replace('Bottom navigation')
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
     const logout = () => {
+
         Alert.alert(
             "Logout",
             "Are you sure want to logout",
             [
                 {
-                    text: "Cancel", onPress: ()=> console.log("cancel pressed")
+                    text: "Cancel", onPress: () => { }
                 },
                 {
-                    text: "Continue", onPress: ()=> {
-                        console.log("continue pressed")
-                    }
+                    text: "Continue", onPress: () => userLogout()
                 },
-                {defaultIndex: 1}
+                { defaultIndex: 1 }
             ]
         )
     }
@@ -52,9 +62,6 @@ const Profile = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container}>
-                <StatusBar backgroundColor={COLORS.gray} />
-
-
                 <View style={{ width: '100%' }}>
                     <Image
                         source={require('../assets/images/space.jpg')}
@@ -72,11 +79,19 @@ const Profile = ({ navigation }) => {
                     </Text>
 
                     {userLogin === false ?
-                        (<TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                            <View style={styles.loginBtn}>
-                                <Text style={styles.loginText}>L O G I N</Text>
-                            </View>
-                        </TouchableOpacity>)
+                        (<View style={{flexDirection: 'row'}}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                                <View style={styles.loginBtn}>
+                                    <Text style={styles.loginText}>L O G I N</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                                <View style={styles.signUp}>
+                                    <Text style={styles.loginText}>S I G N U P</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                        )
 
                         :
                         (<View style={styles.loginBtn}>
@@ -96,7 +111,7 @@ const Profile = ({ navigation }) => {
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => navigation.navigate('Orders')}>
                                 <View style={styles.menuItem(0.5)}>
-                                <MaterialCommunityIcons name="truck-delivery-outline" size={24} color={COLORS.gray} />
+                                    <MaterialCommunityIcons name="truck-delivery-outline" size={24} color={COLORS.gray} />
                                     <Text style={styles.itemText}>Orders</Text>
                                 </View>
                             </TouchableOpacity>
@@ -155,6 +170,15 @@ const styles = StyleSheet.create({
         borderColor: COLORS.primary,
         borderRadius: SIZES.xxLarge,
         marginTop: SIZES.small
+    },
+    signUp: {
+        backgroundColor: COLORS.lightWhite,
+        padding: 2,
+        borderWidth: 0.4,
+        borderColor: COLORS.primary,
+        borderRadius: SIZES.xxLarge,
+        marginTop: SIZES.small,
+        marginLeft: SIZES.small 
     },
     loginText: {
         fontWeight: '600',

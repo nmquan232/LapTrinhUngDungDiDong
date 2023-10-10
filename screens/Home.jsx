@@ -16,7 +16,7 @@ const Home = ({navigation}) => {
 
     const checkExistingUser = async ()=> {
         const id = await AsyncStorage.getItem('id')
-        const userId = `user${JSON.parse(id)}`
+        const userId = `user${id}`
 
         try {
             const currentUser = await AsyncStorage.getItem(userId)
@@ -25,8 +25,6 @@ const Home = ({navigation}) => {
                 const parseData = JSON.parse(currentUser)
                 setUserData(parseData)
                 setUserLogin(true)
-            } else{
-                navigation.navigate('Login')
             }
         } catch (error) {
             console.log(error);
@@ -38,7 +36,7 @@ const Home = ({navigation}) => {
                 <View style={styles.appBar}>
                     <Ionicons name='location-outline' size={24} />
 
-                    <Text style={styles.location}>{userData.location}</Text>
+                    <Text style={styles.location}> {userData ? userData.location : 'Ha Noi'} </Text>
 
                     <View style={{ alignItems: 'flex-end' }}>
                         <View style={styles.cartCount}>
