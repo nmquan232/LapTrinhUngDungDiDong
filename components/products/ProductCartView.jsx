@@ -1,10 +1,48 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { COLORS, SIZES } from '../../constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
 const ProductCartView = (props) => {
    const navigation = useNavigation()
+
+   const handleAddCart = async () => {
+      const id = await AsyncStorage.getItem('id')
+      if(id !== null){
+         try {
+            const newCart = {
+               userId: id,
+               cartItem: props.product._id,
+               qty: 1
+            }
+            const res = await axios.post('https://furniture-app-ottf.onrender.com/cart', newCart)
+            if (res.status === 200) {
+               Alert.alert(
+                  "Success",
+                  "Add cart success",
+                  [
+      
+                      { defaultIndex: 1 }
+                  ]
+              )
+            }else{
+               Alert.alert(
+                  "Fail",
+                  "Add cart fail",
+                  [
+      
+                      { defaultIndex: 1 }
+                  ]
+              )
+            }
+         } catch (error) {
+            console.log(error);
+         }
+      }
+   }
    return (
       <TouchableOpacity onPress={() => { navigation.navigate('ProductDetails', {id: props.product._id})} }>
          <View style={styles.container}>
@@ -20,7 +58,7 @@ const ProductCartView = (props) => {
                <Text style={styles.suplier}>{props.product.supplier}</Text>
                <Text style={styles.price} numberOfLines={1}>$ {props.product.price}</Text>
             </View>
-            <TouchableOpacity style={styles.addBtn}>
+            <TouchableOpacity style={styles.addBtn} onPress={()=> handleAddCart()}>
                <Ionicons name="add-circle" size={35} color={COLORS.primary} />
             </TouchableOpacity>
          </View>

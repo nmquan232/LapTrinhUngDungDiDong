@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
 import { Welcome, Carousel, Heading, ProductRow } from '../components/index';
 import {COLORS, SIZES} from '../constants/index'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { Context } from '../store';
 const Home = ({navigation}) => {
+    const [state, dispatch] = useContext(Context)
     const [userData, setUserData] = useState(null)
     const [userLogin, setUserLogin] = useState(false)
-
     useEffect( ()=> {
         checkExistingUser()
     }, [])
@@ -40,9 +40,15 @@ const Home = ({navigation}) => {
 
                     <View style={{ alignItems: 'flex-end' }}>
                         <View style={styles.cartCount}>
-                            <Text style={styles.cartNumber} >8</Text>
+                            <Text style={styles.cartNumber}> {state.countCart !== 0 && state.countCart} </Text>
                         </View>
-                        <TouchableOpacity onPress={()=> navigation.navigate('Cart')}>
+                        <TouchableOpacity onPress={()=> {
+                            if(userLogin){
+                                navigation.navigate('Cart')
+                            }else {
+                                navigation.navigate('Profile')
+                            }
+                        }}>
                             <FontAwesome name='shopping-bag' size={24} />
                         </TouchableOpacity>
                     </View>
@@ -53,7 +59,7 @@ const Home = ({navigation}) => {
                 <Carousel />
                 <Heading />
                 <ProductRow />
-
+                <View style={{marginBottom: 30}}></View>
             </ScrollView>
 
 

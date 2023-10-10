@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import BottomTabNavigation from './navigation/BottomTabNavigation';
-import { Cart, ProductDetails, NewRivals, LoginPage, Orders, Favourites, Register } from './screens/index';
+import { Cart, ProductDetails, NewRivals, LoginPage, Orders, Favourites, Register, Checkout } from './screens/index';
 
 import { ContextProvider } from './store/index';
 
@@ -75,6 +75,10 @@ export default function App() {
           <Stack.Screen
             name='Favourites'
             component={Favourites}
+          />
+          <Stack.Screen
+            name='Checkout'
+            component={Checkout}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -8,6 +8,7 @@ import LoginPage from "./LoginPage";
 import Orders from "./Orders";
 import Favourites from "./Favourites";
 import Register from "./Register";
+import Checkout from "./Checkout";
 export{
     Home,
     Search,
@@ -18,5 +19,6 @@ export{
     LoginPage,
     Orders,
     Favourites,
-    Register
+    Register,
+    Checkout
 }

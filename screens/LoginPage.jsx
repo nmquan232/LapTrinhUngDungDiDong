@@ -31,7 +31,12 @@ const LoginPage = ({ navigation }) => {
             ]
         )
     }
-
+    useEffect(()=> {
+        if(resData !== null) {
+            saveUser()
+        }
+    }, [resData])
+    
     const handleLogin = async (value) => {
         setLoader(true)
         try {
@@ -39,9 +44,7 @@ const LoginPage = ({ navigation }) => {
             if (response.status === 200) {
                 setResData(response.data)
                 setLoader(false)
-                await AsyncStorage.setItem(`user${resData._id}`, JSON.stringify(resData))
-                await AsyncStorage.setItem('id', resData._id)
-                navigation.replace('Bottom navigation')
+                
             } else {
                 Alert.alert(
                     "Login fail",
@@ -57,6 +60,11 @@ const LoginPage = ({ navigation }) => {
         } finally {
             setLoader(false)
         }
+    }
+    const saveUser = async () => {
+        await AsyncStorage.setItem(`user${resData._id}`, JSON.stringify(resData))
+        await AsyncStorage.setItem('id', resData._id)
+        navigation.replace('Bottom navigation')
     }
     return (
         <ScrollView>

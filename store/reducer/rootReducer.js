@@ -2,6 +2,7 @@ const initState = {
     products: [
         
     ],
+    countCart: 0
 }
 
 
@@ -12,7 +13,10 @@ const rootReducer = (state = initState, action) => {
             return {
                 ...state, products: action.products
             }
-        
+        case 'COUNT_CART':
+            return {
+                ...state, countCart: action.count
+            }
         default:
             break;
     }
