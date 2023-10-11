@@ -41,20 +41,6 @@ const Cart = ({ navigation }) => {
                 keyExtractor={(item) => item._id}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
             />
-            <View style={styles.cartInfo} >
-                <Text style={styles.orderInfo} >Order Info</Text>
-                <View style={styles.subTotal}>
-                    <Text style={styles.text}>Subtotal</Text>
-                    <Text style={styles.text}>Price</Text>
-                </View>
-                <View style={styles.subTotal}>
-                    <Text style={styles.text}>Total</Text>
-                    <Text style={styles.text}>Price</Text>
-                </View>
-                <TouchableOpacity style={styles.cartInfoBTN} onPress={() => navigation.navigate('Checkout')} >
-                    <Text style={styles.BTNtext}>CHECK OUT</Text>
-                </TouchableOpacity>
-            </View>
         </SafeAreaView>
     );
 }
@@ -78,36 +64,6 @@ const styles = StyleSheet.create({
         fontSize: SIZES.large,
         color: COLORS.primary
     },
-    cartInfo: {
-        marginVertical: 20
-    },
-    orderInfo: {
-        fontFamily: 'bold',
-        fontSize: SIZES.large
-    },
-    subTotal: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: SIZES.medium,
-
-    },
-    text: {
-        fontSize: 14,
-        fontFamily: 'regular',
-        color: COLORS.gray
-    },
-    cartInfoBTN: {
-        marginTop: SIZES.medium,
-        alignItems: 'center',
-        backgroundColor: COLORS.primary,
-        paddingVertical: SIZES.small,
-        borderRadius: SIZES.large
-
-    },
-    BTNtext: {
-        color: COLORS.lightWhite
-    }
-
 })
 
 export default Cart;

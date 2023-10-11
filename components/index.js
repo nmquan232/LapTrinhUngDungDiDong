@@ -9,6 +9,7 @@ import SearchTile from "./products/SearchTile";
 import BackBTN from "./BackBTN";
 import Button from "./Button";
 import CartItem from './cart/CartItem'
+import OrderItem from "./order/OrderItem";
 export{
    Welcome,
    SearchInput,
@@ -20,5 +21,6 @@ export{
    SearchTile,
    BackBTN,
    Button,
-   CartItem
+   CartItem,
+   OrderItem
 }

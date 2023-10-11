@@ -2,63 +2,37 @@ import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS, SIZES, SHADOWS } from '../../constants';
-import { AntDesign } from '@expo/vector-icons'; 
-import axios from 'axios';
-const CartItem = ({ item }) => {
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+const OrderItem = ({item}) => {
     const navigation = useNavigation()
-    const handleDelete = () => {
-        Alert.alert(
-            "Delete",
-            "Are you sure?",
-            [
-                {text: "Cancel", onPress: ()=> {}},
-                {text: "Delete", onPress: ()=> deleteItem()},
-                { defaultIndex: 1 }
-            ]
-        )
-    }
-    const deleteItem = async () => {
-        try {
-            const res = await axios.delete(`https://furniture-app-ottf.onrender.com/cart/${item._id}`)
-            if (res.status === 200) {
-                navigation.replace('Cart')
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    
     return (
         <View>
             <TouchableOpacity style={styles.container}>
                 <View style={styles.image}>
                     <Image
                         source={{
-                            uri: item.cartItem.imageUrl
+                            uri: item.productId.imageUrl
                         }}
                         style={styles.productImg}
                     />
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.productTitle}>
-                        {item.cartItem.title}
+                        {item.productId.title}
                     </Text>
                     <Text style={styles.supplier}>
-                        {item.cartItem.supplier}
+                        {item.productId.supplier}
                     </Text>
                     <Text style={styles.supplier}>
-                        $ {item.cartItem.price} * {item.qty}
+                        $ {item.total}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.checkOutBTN}
-                    onPress={() => navigation.navigate('Checkout', {
-                        product: item
-                    })}
-                >
-                    <Text style={styles.checkoutText} >Checkout</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.deleteIcon} onPress={()=>handleDelete()} >
-                    <AntDesign name="delete" size={24} color={COLORS.red} />
-                </TouchableOpacity>
+                
+                <View style={styles.delivery}>
+                    <MaterialCommunityIcons name="truck-delivery-outline" size={20} color={COLORS.gray} />
+                    <Text style={styles.deliveryTxt}>{item.delivery_status}</Text>
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -105,25 +79,19 @@ const styles = StyleSheet.create({
         color: COLORS.gray,
         marginTop: 3
     },
-    checkOutBTN: {
-        paddingHorizontal: 10,
-        borderRadius: SIZES.medium,
-        backgroundColor: COLORS.primary,
+    delivery: {
+        flexDirection: 'row',
         position: 'absolute',
         right: 10,
         bottom: 20
     },
-    checkoutText: {
-        color: COLORS.lightWhite,
+    deliveryTxt: {
         fontFamily: 'regular',
-        fontSize: SIZES.small
-    },
-    deleteIcon: {
-        position: 'absolute',
-        right: 10,
-        top: 20
+        color: COLORS.gray,
+        marginHorizontal: 5
     }
+
 
 })
 
-export default CartItem;
+export default OrderItem;

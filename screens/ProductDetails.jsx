@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { COLORS, SIZES } from '../constants/index'
 import { Ionicons, SimpleLineIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { Context } from '../store/index';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 const ProductDetails = ({ route, navigation }) => {
     const { id } = route.params
     const stars = [1, 2, 3, 4, 5]
@@ -22,6 +23,40 @@ const ProductDetails = ({ route, navigation }) => {
             setCount(count - 1)
 
     }
+    const handleAddCart = async () => {
+        const id = await AsyncStorage.getItem('id')
+        if(id !== null){
+           try {
+              const newCart = {
+                 userId: id,
+                 cartItem: product[0]._id,
+                 qty: count
+              }
+              const res = await axios.post('https://furniture-app-ottf.onrender.com/cart', newCart)
+              if (res.status === 200) {
+                 Alert.alert(
+                    "Success",
+                    "Add cart success",
+                    [
+        
+                        { defaultIndex: 1 }
+                    ]
+                )
+              }else{
+                 Alert.alert(
+                    "Fail",
+                    "Add cart fail",
+                    [
+        
+                        { defaultIndex: 1 }
+                    ]
+                )
+              }
+           } catch (error) {
+              console.log(error);
+           }
+        }
+     }
     return (
         <ScrollView>
 
@@ -109,7 +144,7 @@ const ProductDetails = ({ route, navigation }) => {
                         <TouchableOpacity onPress={() => {}} style={styles.buyBtn}>
                             <Text style={styles.buyBtnText}>BUY</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.addToCart} onPress={()=> {}}>
+                        <TouchableOpacity style={styles.addToCart} onPress={()=> handleAddCart()}>
                             <FontAwesome name='shopping-bag' size={24} color={COLORS.lightWhite}/>
                         </TouchableOpacity>
                     </View>
