@@ -1,13 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
 import { COLORS, SIZES } from '../constants';
 import { BackBTN } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { CartItem } from '../components';
-import { Context } from '../store';
 const Cart = ({ navigation }) => {
-    const [state, dispatch] = useContext(Context)
     const [cartData, setCartData] = useState(null)
     useEffect(() => {
         getCart()
@@ -21,10 +19,6 @@ const Cart = ({ navigation }) => {
                 const res = await axios.get(`https://furniture-app-ottf.onrender.com/cart/find/${userId}`)
                 if (res.status === 200) {
                     setCartData(res.data.products)
-                    dispatch({
-                        type: 'COUNT_CART',
-                        count: res.data.products.length
-                    })
                 }
             } catch (error) {
                 console.log(error);

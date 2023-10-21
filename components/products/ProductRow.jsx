@@ -1,19 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { COLORS, SIZES } from '../../constants/index'
 import ProductCartView from './ProductCartView';
-import { Context } from '../../store/index';
-import useFetch from '../../hook/useFetch'
-const ProductRow = () => {
-   const {data, isLoading, error, reFetch} = useFetch('https://furniture-app-ottf.onrender.com/products')
-   const [state, dispatch] = React.useContext(Context)
-   React.useEffect(()=> {
-      dispatch({
-         type: 'FETCH_API_PRODUCTS',
-         products: data
-      })
-   }, [data])
-
+const ProductRow = ({data, isLoading, error}) => {
    
    return (
       <View style={styles.container}>

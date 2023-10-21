@@ -13,7 +13,7 @@ const ProductDetails = ({ route, navigation }) => {
     
     const [count, setCount] = React.useState(1)
     const product = React.useMemo(() => {
-        return state.products.filter((item) => item._id === id)
+        return state.products.find((item) => item._id === id)
     }, [state])
     const handlePlus = () => {
         setCount(count + 1)
@@ -29,7 +29,7 @@ const ProductDetails = ({ route, navigation }) => {
            try {
               const newCart = {
                  userId: id,
-                 cartItem: product[0]._id,
+                 cartItem: product._id,
                  qty: count
               }
               const res = await axios.post('https://furniture-app-ottf.onrender.com/cart', newCart)
@@ -73,7 +73,7 @@ const ProductDetails = ({ route, navigation }) => {
 
                 <View style={styles.imageContainer}>
                     <Image
-                        source={{uri: product[0].imageUrl}}
+                        source={{uri: product.imageUrl}}
                         style={styles.image}
                     />
                 </View>
@@ -81,9 +81,9 @@ const ProductDetails = ({ route, navigation }) => {
 
                 <View style={styles.details}>
                     <View style={styles.titleRow}>
-                        <Text style={styles.title}>{product[0].title}</Text>
+                        <Text style={styles.title}>{product.title}</Text>
                         <View style={styles.priceWrapper}>
-                            <Text style={styles.price}>$ {product[0].price}</Text>
+                            <Text style={styles.price}>$ {product.price}</Text>
                         </View>
                     </View>
 
@@ -118,7 +118,7 @@ const ProductDetails = ({ route, navigation }) => {
                         <Text style={styles.desc}>
                             Description
                         </Text>
-                        <Text style={styles.descText}>{product[0].desc}</Text>
+                        <Text style={styles.descText}>{product.desc}</Text>
                     </View>
 
 
@@ -127,7 +127,7 @@ const ProductDetails = ({ route, navigation }) => {
                             <View style={styles.locationWrapper}>
                                 <Ionicons name='location-outline' size={24} />
 
-                                <Text style={styles.locationText}> {product[0].product_location} </Text>
+                                <Text style={styles.locationText}> {product.product_location} </Text>
                             </View>
                         </TouchableOpacity>
 
@@ -141,10 +141,9 @@ const ProductDetails = ({ route, navigation }) => {
 
 
                     <View style={styles.checkOutRow}>
-                        <TouchableOpacity onPress={() => {}} style={styles.buyBtn}>
-                            <Text style={styles.buyBtnText}>BUY</Text>
-                        </TouchableOpacity>
+                        
                         <TouchableOpacity style={styles.addToCart} onPress={()=> handleAddCart()}>
+                            <Text style={styles.addToCartTxt}>Add to cart</Text>
                             <FontAwesome name='shopping-bag' size={24} color={COLORS.lightWhite}/>
                         </TouchableOpacity>
                     </View>
@@ -274,29 +273,25 @@ const styles = StyleSheet.create({
 
     checkOutRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         marginHorizontal: SIZES.medium,
         marginTop: SIZES.xxLarge
     },
-    buyBtn: {
-        padding: SIZES.small -4,
-        width: SIZES.width*0.7,
-        backgroundColor: 'black',
-        alignItems: 'center',
-        borderRadius: SIZES.xxLarge
-    },
-    buyBtnText: {
-        color: COLORS.lightWhite,
-        fontFamily: 'bold',
-        fontSize: SIZES.large
-    },
     addToCart: {
         padding: SIZES.small,
-        width: SIZES.width*0.15,
+        width: SIZES.width*0.94,
         backgroundColor: 'black',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: SIZES.xsLarge
+        borderRadius: SIZES.xsLarge,
+        flexDirection: 'row'
+    },
+    addToCartTxt: {
+        color: COLORS.lightWhite,
+        fontFamily: 'semiBold',
+        fontSize: 16,
+        alignItems: 'center',
+        marginRight: SIZES.medium
     }
 
 })
