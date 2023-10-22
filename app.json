@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "furniture_app",
-    "slug": "furniture_app",
+    "slug": "furniture",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,8 +29,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "634fee7a-e2b7-4fc4-a38b-5c9dc6dd2445"
+        "projectId": "fd5bd52e-b470-486a-ba13-648eced9190b"
       }
-    }
+    },
+    "owner": "tuaans17"
   }
 }
