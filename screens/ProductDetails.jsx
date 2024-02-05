@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
 import { COLORS, SIZES } from '../constants/index'
 import { Ionicons, SimpleLineIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { Context } from '../store/index';
-import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const ProductDetails = ({ route, navigation }) => {
     const { id } = route.params
     const stars = [1, 2, 3, 4, 5]
     const [state, dispatch] = React.useContext(Context)
-    
+
     const [count, setCount] = React.useState(1)
     const product = React.useMemo(() => {
         return state.products.find((item) => item._id === id)
@@ -25,38 +24,38 @@ const ProductDetails = ({ route, navigation }) => {
     }
     const handleAddCart = async () => {
         const id = await AsyncStorage.getItem('id')
-        if(id !== null){
-           try {
-              const newCart = {
-                 userId: id,
-                 cartItem: product._id,
-                 qty: count
-              }
-              const res = await axios.post('https://furniture-app-ottf.onrender.com/cart', newCart)
-              if (res.status === 200) {
-                 Alert.alert(
-                    "Success",
-                    "Add cart success",
-                    [
-        
-                        { defaultIndex: 1 }
-                    ]
-                )
-              }else{
-                 Alert.alert(
-                    "Fail",
-                    "Add cart fail",
-                    [
-        
-                        { defaultIndex: 1 }
-                    ]
-                )
-              }
-           } catch (error) {
-              console.log(error);
-           }
+        if (id !== null) {
+            try {
+                const newCart = {
+                    userId: id,
+                    cartItem: product._id,
+                    qty: count
+                }
+                const res = await axios.post('https://furniture-app-ottf.onrender.com/cart', newCart)
+                if (res.status === 200) {
+                    Alert.alert(
+                        "Success",
+                        "Add cart success",
+                        [
+
+                            { defaultIndex: 1 }
+                        ]
+                    )
+                } else {
+                    Alert.alert(
+                        "Fail",
+                        "Add cart fail",
+                        [
+
+                            { defaultIndex: 1 }
+                        ]
+                    )
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
-     }
+    }
     return (
         <ScrollView>
 
@@ -73,7 +72,7 @@ const ProductDetails = ({ route, navigation }) => {
 
                 <View style={styles.imageContainer}>
                     <Image
-                        source={{uri: product.imageUrl}}
+                        source={{ uri: product.imageUrl }}
                         style={styles.image}
                     />
                 </View>
@@ -123,7 +122,7 @@ const ProductDetails = ({ route, navigation }) => {
 
 
                     <View style={styles.locationDelivery}>
-                        <TouchableOpacity onPress={()=> {}}>
+                        <TouchableOpacity onPress={() => { }}>
                             <View style={styles.locationWrapper}>
                                 <Ionicons name='location-outline' size={24} />
 
@@ -131,7 +130,7 @@ const ProductDetails = ({ route, navigation }) => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={()=> {}}>
+                        <TouchableOpacity onPress={() => { }}>
                             <View style={styles.locationWrapper}>
                                 <MaterialCommunityIcons name="truck-delivery-outline" size={24} />
                                 <Text style={styles.locationText}>Express</Text>
@@ -141,10 +140,10 @@ const ProductDetails = ({ route, navigation }) => {
 
 
                     <View style={styles.checkOutRow}>
-                        
-                        <TouchableOpacity style={styles.addToCart} onPress={()=> handleAddCart()}>
+
+                        <TouchableOpacity style={styles.addToCart} onPress={() => handleAddCart()}>
                             <Text style={styles.addToCartTxt}>Add to cart</Text>
-                            <FontAwesome name='shopping-bag' size={24} color={COLORS.lightWhite}/>
+                            <FontAwesome name='shopping-bag' size={24} color={COLORS.lightWhite} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -279,7 +278,7 @@ const styles = StyleSheet.create({
     },
     addToCart: {
         padding: SIZES.small,
-        width: SIZES.width*0.94,
+        width: SIZES.width * 0.94,
         backgroundColor: 'black',
         alignItems: 'center',
         justifyContent: 'center',

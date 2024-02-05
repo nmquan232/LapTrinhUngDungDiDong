@@ -33,6 +33,9 @@ const OrderItem = ({item}) => {
                     <MaterialCommunityIcons name="truck-delivery-outline" size={20} color={COLORS.gray} />
                     <Text style={styles.deliveryTxt}>{item.delivery_status}</Text>
                 </View>
+                <View> 
+                    <Text style={styles.qty}>qty: {item.qty}</Text>    
+                </View>
             </TouchableOpacity>
         </View>
     );
@@ -89,6 +92,10 @@ const styles = StyleSheet.create({
         fontFamily: 'regular',
         color: COLORS.gray,
         marginHorizontal: 5
+    },
+    qty: {
+        fontFamily: 'regular',
+        color: COLORS.gray
     }
 
 
